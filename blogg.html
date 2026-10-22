@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./dist/blogg.js" defer></script>
+    <link rel="stylesheet" href="bloggStyle.css">
+    <title>Bloggsidan</title>
+</head>
+
+<body>
+    <header>
+        <h1>Svampletarna</h1>
+        <button type="button" id="authButton">Logga in</button>
+        <nav>
+            <ul>
+                <li><a href="index.html">Alla Svampar</a></li>
+                <li><a href="mina-svampar.html">Mina Svampar</a></li>
+                <li><a href="lookalikes.html">Svampguiden</a></li>
+                <li><a href="blogg.html">Blogginlägg</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Bloggen</h2>
+            <button id="writePostBtn">Skapa inlägg</button>
+            <p id="loginMessage">Du måste vara inloggad för att skapa ett inlägg</p>
+        </section>
+        <form> <!--Måste döljas om man inte är inloggad-->
+
+            <label for="title">Titel: </label>
+            <input type="text" id="title" name="title">
+
+            <label for="content">Vad vill du säga: </label>
+            <textarea id="content" name="content"></textarea>
+
+            <input type="submit" value="Dela inlägg">
+
+        </form>
+
+        <section id="presentBlogposts">
+            <!--Här skrivs alla inlägg ut på sidan-->
+        </section>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="loginChecks.js" defer></script>
+    <script src="indexScript.js" defer></script>
+    <link rel="stylesheet" href="indexStyle.css">
+    <title>Svampletarna - Hem</title>
+</head>
+
+<body>
+    <header>
+        <h1>Svampletarna</h1>
+        <button type="button" id="authButton">Logga in</button>
+        <nav>
+            <ul>
+                <li><a href="index.html">Alla Svampar</a></li>
+                <li><a href="mina-svampar.html">Mina Svampar</a></li>
+                <li><a href="lookalikes.html">Svampguiden</a></li>
+                <li><a href="blogg.html">Blogginlägg</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Föreningens Svampsamling</h2>
+        <!--Paragraf med ID för att kunna skriva ut ett errormeddelande-->
+        <p id="jsonError"></p>
+        <section>
+            <!-- Här ska JS skapa articles med svamp!-->
+        </section>
+    </main>
+
+    <footer>
+        <p>Grupp 4 WU26 - Linn, Felicia, Zouhir</p>
+    </footer>
+
+</body>
+
+</html>

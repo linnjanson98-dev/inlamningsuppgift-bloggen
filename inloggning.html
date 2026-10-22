@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="inloggningScript.js" defer></script>
+    <link rel="stylesheet" href="inloggningStyle.css">
+    <title>Inloggningssida</title>
+</head>
+<body>
+    <header>
+        <h1>Svampletarna</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Alla Svampar</a></li>
+                <li><a href="mina-svampar.html">Mina Svampar</a></li>
+                <li><a href="lookalikes.html">Svampguiden</a></li>
+                <li><a href="blogg.html">Blogginlägg</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <p id="felmeddelande">Felaktiga inloggningsuppgifter</p> <!--La mitt felmeddelande här för att kunna kontrollera den utanför form, 
+                                                                    gav ID ifall det kom fler <p>, men nu gjorde det inte det så hade nog kunnat skippa-->
+        <form> <!--Har två stycken forms, ett för inloggning och ett för när man är inloggad så separerar dom med ID -->
+            <h2>Inloggning</h2>
+            <label for="username">Namn: </label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="psw">Lösenord:</label>
+            <input type="password" id="psw" name="psw" required><br><br>
+
+            <input type="submit" value="Logga in"> 
+
+        </form>
+        <!--Form för när man är inloggad, Välkomstmeddelandet skrivs i javascript för att kunna använda sig av det inmatade användarnamnet-->
+    </main>
+</body>
+</html>

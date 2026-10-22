@@ -1,0 +1,179 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+#notLoggedIn,
+#writePostBtn,
+form {
+    display: none;
+}
+
+body {
+    background-color: #d9d2b8;
+}
+
+h1,
+h2 {
+    text-align: center;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+    color: #5a6618;
+    text-shadow: 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+nav {
+    margin-bottom: 2rem;
+}
+
+
+nav ul {
+    list-style-type: none;
+}
+
+a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #332e18;
+    border-radius: 5px;
+    margin: 0.4rem;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    color: #d9d2b8;
+    background-color: #5a6618;
+}
+
+
+form {
+    flex-direction: column;
+    text-align: center;
+}
+
+#title {
+    margin: 1rem auto;
+}
+
+#content {
+    align-self: center;
+    width: 20rem;
+    height: 10rem;
+    max-height: 20rem;
+    resize: none;
+}
+
+input[type="submit"] {
+    width: fit-content;
+    margin: 1rem 2rem 1rem auto;
+}
+
+p {
+    text-align: center;
+    margin: 0 1rem;
+    min-width: 0;
+    color: #332e18;
+}
+
+article p:last-of-type {
+    margin-top: 1rem;
+}
+
+button {
+    display: block;
+    margin: 1rem 0.8rem 0.8rem auto;
+    padding: 0.5rem 1rem;
+    color: #d9d2b8;
+    background-color: #5a6618;
+    border-radius: 0.5rem;
+    font-weight: bold;
+}
+
+#writePostBtn {
+        margin: 0 2rem;
+        padding: 0.5rem 1rem;
+        color: #d9d2b8;
+        background-color: #5a6618;
+        border-radius: 0.5rem;
+        font-weight: bold;
+    }
+
+/*Lägger footer där den ska och fixar färger*/
+footer {
+    text-align: center;
+    padding-bottom: 0.5rem;
+    padding-top: 1rem;
+    color: #5a6618;
+    border: 1px solid #332e18;
+    margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+
+    h1 {
+        padding-left: 1rem;
+        font-size: 3rem;
+        text-align: left;
+    }
+
+    nav {
+        margin-left: 5rem;
+        margin-right: 5rem;
+        padding: 1rem;
+        margin-bottom: 0;
+    }
+
+    /*Gör nav till flex för at kunna lägga länkarna på rad*/
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 2.5rem;
+        list-style-type: none;
+    }
+
+    /*Ändrar font size för att passa en större skärm*/
+    a {
+        font-size: 1.5rem;
+    }
+
+    section {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 1rem auto;
+        gap: 30rem;
+    }
+
+
+    p {
+        margin: 0 1.5rem;
+    }
+
+    article p:first-of-type {
+        margin-top: 1rem;
+    }
+
+    article p:last-of-type {
+        margin-bottom: 1rem;
+    }
+
+    /*Ser till att knappen är längst ner*/
+    button {
+        margin-top: auto;
+    }
+
+    /*Ändrar färg på bakgrund på länkar och button med :hover och gör en mjukare transition med ease*/
+    a,
+    button {
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a:hover,
+    button:hover {
+        background-color: #f0af30;
+        color: black;
+    }
+}
