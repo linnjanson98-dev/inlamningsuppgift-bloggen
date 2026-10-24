@@ -12,7 +12,7 @@ function checkIfLoggedIn() {
         return false;
     }
 
-}
+} 
 
 function updateButton() {
     if (checkIfLoggedIn()) {

@@ -5,6 +5,7 @@ const loginMessage = document.getElementById("loginMessage");
 
 
 function init(): void {
+    //localStorage.removeItem("blogPosts");
     //Kolla om man är inloggad och kan skapa inlägg eller kommentera på inlägg
     initLogin();
     initWritePost();
@@ -61,6 +62,33 @@ function initWritePost(): void {
         formRef.style.display = "flex";
     })
 
+    formRef.addEventListener("submit", (event) =>{
+        event.preventDefault();
+        const title = formRef.querySelector<HTMLInputElement>("#title");
+        const username = localStorage.getItem("username");
+        const content = formRef.querySelector<HTMLTextAreaElement>("#content");
+//kollar så att det finns title och content och att de har något innehåll. Valde prepend och inte appendChild för jag ville texten skulle hamna längst upp.
+        if(!title?.value || !content?.value){
+            const postError = document.createElement("p")
+            postError.textContent = "Saknas titel och/eller text.";
+            formRef.prepend(postError);
+        }
+        else if (!username){
+            const postError = document.createElement("p");
+            postError.textContent = "Gick inte hämta användare. Försök ladda om sidan.";
+            formRef.prepend(postError);
+        }
+        else{
+            const newPost = new BlogPost(title.value, username, content.value);
+            let blogPostArray: BlogPost [] = JSON.parse(localStorage.getItem("blogPosts") || "[]")
+            blogPostArray.push(newPost);
+            localStorage.setItem("blogPosts", JSON.stringify(blogPostArray));
+            formRef.reset();
+            writePostBtn.style.display = "inline-block";
+            formRef.style.display = "none";
+        }
+        
+    })
 
 }
 
@@ -82,7 +110,7 @@ class BlogPost {
     addComment(comment: Comments): void {
         this.comments.push(comment);
     }
-    writePost() {
+    publishBlogPost(){
 
     }
 }
@@ -99,7 +127,7 @@ class Comments {
     }
 }
 
-const username = localStorage.getItem("username");
+/*const username = localStorage.getItem("username");
 
 if (username) {
     const post = new BlogPost(
@@ -111,7 +139,7 @@ if (username) {
     post.addComment(comment);
 
     console.log(post);
-}
+}*/
 
 
 init();

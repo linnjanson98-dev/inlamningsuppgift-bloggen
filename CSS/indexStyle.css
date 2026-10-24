@@ -13,9 +13,21 @@ och placerar den där jag vill ha den*/
     text-decoration: underline;
 }
 
+/* Störde mig att min footer poppade upp varje gång sidan laddades om så jag fixade det 
+med att göra body till flex och med min-height som gör att sidan fyller minst hela skärmen.
+och flex: 1 på main gör så main tar upp allt det lediga utrymmet och footer hamnar då längst ner
+även när inga kort är där.*/
 body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
     background-color: #d9d2b8;
 }
+
+main{
+    flex: 1;
+}
+
 /*Placerar Rubrik där jag vill ha den och sätter en skugga på för att ge kontrast mot bakgrunden. */
 h1, h2 {
     text-align: center;
@@ -24,6 +36,8 @@ h1, h2 {
     color: #5a6618;
     text-shadow: 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000;
 }
+
+
 /* Ger lite mellanrum mellan nav och h2*/
 nav {
     margin-bottom: 2rem;
@@ -70,7 +84,7 @@ h3 {
     color: #332e18;
 }
 
-article h3:last-of-type {
+h4 {
     font-size: 1.2rem;
     /*margin-bottom: 1rem;*/
 }
@@ -107,12 +121,12 @@ article p:last-of-type {
 }
 
 .deadly {
-    color: red;
-    border: 1px solid red;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
 }
 
 .poisonous {
-    color: red;
+    color: #d32f2f;
 }
 
 /*Gör button till block för att kunna ändra placering med padding och margin. */
@@ -124,6 +138,8 @@ button {
     background-color: #5a6618;
     border-radius: 0.5rem;
     font-weight: bold;
+    font-family: inherit;
+    border: 1px solid black;
 }
 
 /*Lägger footer där den ska och fixar färger*/
@@ -131,18 +147,31 @@ footer {
     text-align: center;
     padding-bottom: 0.5rem;
     padding-top: 1rem;
-    color: #5a6618;
     border: 1px solid #332e18;
     margin-top: 1rem;
 }
 
+footer p{
+    color: #5a6618;
+}
+
+a[aria-current="page"] {
+    background-color: #f0af30;
+    color: black;
+}
 
 
 /*Ändringar för störra skärmar, typ dator*/
 @media (min-width: 768px) {
 
+    main{
+        width: 100%;
+        margin: 0 auto;
+        max-width: 1200px;
+    }
     
     h1 {
+        padding-top: 1.1rem;
         padding-left: 1rem;
         font-size: 3rem;
         text-align: left;
@@ -151,7 +180,7 @@ footer {
     nav {
         margin-left: 5rem;
         margin-right: 5rem;
-        padding: 1rem;
+        padding: 0 1rem 1rem 1rem;
         margin-bottom: 0;
     }
 
@@ -172,20 +201,19 @@ footer {
     200px för att förhindra att squish och att element hamnar utanför sina container, gjorde gap i % även för att hjälpa förhindra detta
     */
     section {
-        margin-left: 5rem;
-        margin-right: 5rem;
+       
         display: grid;
         grid-template-columns: repeat(3, minmax(200px, 1fr));
         column-gap: 3%;
         row-gap: 2rem;
-        padding: 2rem;
+        margin-top: 2rem;
     }
 
     /*Ändrar lite font size och använder margin för at placera titeln rätt på sidan*/
     h2{
         font-size: 2.5rem;
         text-align: left;
-        margin-left: 7.8rem;
+        margin-left: 1rem;
         padding-top: 2rem;
         padding-bottom: 0;
     }
@@ -234,5 +262,10 @@ footer {
     .edible {
         font-size: larger;
         margin: 1.5rem 1.5rem 0 1.5rem;
+    }
+
+    #authButton{
+        margin-top: 1rem;
+        font-size: 1.2rem;
     }
 }

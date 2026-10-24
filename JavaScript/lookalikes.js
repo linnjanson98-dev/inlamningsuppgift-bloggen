@@ -43,7 +43,7 @@ Eftersom jag skrivit "laddar..." i mina h3 rubriker så vill jag tömma dom om n
 
 async function getList() {
     try {
-        const response = await fetch("speciellaEgenskaper.json");
+        const response = await fetch("../speciellaEgenskaper.json");
         if (!response.ok) {
             throw new Error("Något gick fel vid hämtning");
         }
