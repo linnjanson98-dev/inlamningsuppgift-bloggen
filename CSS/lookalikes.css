@@ -146,6 +146,17 @@ a[aria-current="page"] {
     color: black;
 }
 
+/* Tillägg av Linn för att göra knappen samma på alla sidor*/
+#authButton {
+    display: block;
+    margin: 1rem 0.8rem 0.8rem auto;
+    padding: 0.5rem 1rem;
+    color: #d9d2b8;
+    background-color: #5a6618;
+    border-radius: 0.5rem;
+    font-weight: bold;
+}
+
 @media (min-width: 768px) {
 
     h1,
@@ -155,11 +166,14 @@ a[aria-current="page"] {
     }
 
     h1 {
+        padding-top: 1.1rem;
         font-size: 3rem;
     }
 
     h2 {
+        padding-top: 2rem;
         font-size: 2.5rem;
+        margin-bottom: 1rem;
     }
 
     h3 {

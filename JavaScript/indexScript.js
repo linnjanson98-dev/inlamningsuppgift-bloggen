@@ -3,7 +3,6 @@ let sectionRef;
 function init() {
     //Ladda in sidan och starta 
     sectionRef = document.querySelector("section");
-    let jsonError = document.getElementById("jsonError");
     updateButton();
     fetchData();
 }
@@ -14,8 +13,9 @@ async function fetchData() {
     /*Hämta svampar.json, try catch för att kolla så att allting fungerar som det ska när datan hämtas annars vissas ett errormeddelande
         if(!response.ok) fångar det som fetch inte gör, t.ex. 404 not found, och skickar ett errormeddelande.
     */
+   const jsonError = document.getElementById("jsonError");
     try {
-        const response = await fetch("svampar.json");
+        const response = await fetch("../svampar.json");
         if (!response.ok) {
             throw new Error("Kunde inte hämta data");
         }
@@ -44,7 +44,7 @@ function createArticle(data) {
         article.appendChild(latinName);
 
         let imageMushroom = document.createElement("img");
-        imageMushroom.src = "./svampar/" + svamp.bild.replace("./", ""); //Json-filen hade inte mappnamnet så la till det här för att kunna få tag på bilderna. 
+        imageMushroom.src = "../svampar/" + svamp.bild.replace("./", ""); //Json-filen hade inte mappnamnet så la till det här för att kunna få tag på bilderna. 
         imageMushroom.alt = "Bild av " + svamp.svenskt_namn;
         article.appendChild(imageMushroom);
 

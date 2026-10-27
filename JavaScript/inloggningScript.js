@@ -33,7 +33,8 @@ function checkLogin(){
     }
     else{
         localStorage.setItem("username", username);
-        window.location = "index.html";
+        let previousPage = sessionStorage.getItem("previousPage");
+        window.location.href = previousPage;
         //loggedIn();
     }
 }

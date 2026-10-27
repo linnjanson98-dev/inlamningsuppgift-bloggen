@@ -48,7 +48,7 @@ function getSavedNames() {
 // Hämtar alla svampar från svampar.json.
 // async + await: vi väntar på filen innan vi går vidare.
 async function loadMushrooms() {
-    const response = await fetch("svampar.json");
+    const response = await fetch("../svampar.json");
 
     // fetch räknar "404 hittades inte" som ett svar, så vi kontrollerar själva
     if (!response.ok) {
@@ -113,12 +113,12 @@ function createBadge(edibility) {
 function createCard(svamp) {
     const article = document.createElement("article");
 
-    article.appendChild(createTextElement("h2", svamp.svenskt_namn));
+    article.appendChild(createTextElement("h3", svamp.svenskt_namn));
     article.appendChild(createTextElement("h3", svamp.latinskt_namn));
 
     const image = document.createElement("img");
     // JSON-filen har inte mappnamnet, så vi lägger till "svampar/" (samma rad som Linn)
-    image.src = "./svampar/" + svamp.bild.replace("./", "");
+    image.src = "../svampar/" + svamp.bild.replace("./", "");
     image.alt = "Bild av " + svamp.svenskt_namn;
     image.loading = "lazy"; // bilder långt ned laddas först när man scrollar dit
     article.appendChild(image);
