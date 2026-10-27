@@ -27,7 +27,11 @@ if (authButton) {
             localStorage.removeItem("username");
             window.location.reload();
         }
-        else {
+        else { 
+            /*Sparar sidan man är på i sessionStorage och använder den på inloggningssidan för att gå tillbaka till där man var istället för index.
+            Använde history.back först men då laddades inte sidan om och då presenterades inte sparade svampar och man kunde inte kommentera eller göra inlägg. 
+            förens man laddade om sidan själv. */
+            sessionStorage.setItem("previousPage", window.location.href); 
             window.location = "inloggning.html";
         }
     })

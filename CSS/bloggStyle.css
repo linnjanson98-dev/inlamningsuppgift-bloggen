@@ -15,6 +15,60 @@ body {
     background-color: #d9d2b8;
 }
 
+#commentForm{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 3fr;
+    gap: 10px;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+}
+
+#commentForm h4{
+    grid-column: 1/3;
+    grid-row: 1;
+    text-align: left;
+}
+
+#commentForm textarea{
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 90px;
+    min-width: 150px;
+}
+
+#commentForm input[type="submit"]{
+    grid-column: 2;
+    grid-row: 2;
+    padding: 5px;
+    display: block;
+    align-self: bottom;
+    margin: auto 0 5px 15px;
+}
+
+.commentContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+    border-width: 10px 2px 5px 2px;
+    border-color: #332e18;
+    border-style: solid;
+    background-color: #d9d2b8;
+}
+
+.commentBody{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
 h1,
 h2 {
     text-align: center;
@@ -22,6 +76,10 @@ h2 {
     padding-bottom: 1rem;
     color: #5a6618;
     text-shadow: 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+h3{
+    font-size: 1.5rem;
 }
 
 nav {
@@ -92,13 +150,46 @@ button {
 }
 
 #writePostBtn {
-        margin: 0 2rem;
-        padding: 0.5rem 1rem;
-        color: #d9d2b8;
-        background-color: #5a6618;
-        border-radius: 0.5rem;
-        font-weight: bold;
-    }
+    margin: 0 2rem;
+    padding: 0.5rem 1rem;
+    color: #d9d2b8;
+    background-color: #5a6618;
+    border-radius: 0.5rem;
+    font-weight: bold;
+}
+
+#presentBlogPosts{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+article{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    width: 100%;
+    border: 2px solid black;
+    padding: 2rem;
+    background-color: rgb(187, 197, 132);
+    border-radius: 0.3rem;
+}
+
+.postContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.postContainer p{
+    align-self: center;
+    text-align: left;
+    padding: 10px;
+    width: 100%;
+    min-height: 150px;
+    border: 1px solid #332e18;
+}
 
 /*Lägger footer där den ska och fixar färger*/
 footer {
