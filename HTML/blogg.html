@@ -29,14 +29,14 @@
             <p id="loginMessage">Du måste vara inloggad för att skapa ett inlägg</p>
         </section>
         <form> <!--Måste döljas om man inte är inloggad-->
-
+            
             <label for="title">Titel: </label>
             <input type="text" id="title" name="title">
 
             <label for="content">Vad vill du säga: </label>
             <textarea id="content" name="content"></textarea>
-
             <input type="submit" value="Dela inlägg">
+            <p id="missingInput">Saknar Titel eller Text.</p>
 
         </form>
 

@@ -1,3 +1,6 @@
+/* !! Några tillägg här av Linn för att hantera inloggningsknappen !!*/
+
+
 /* sätter standarden för hela sidan. Sätter margin & padding till 0 & med border box säger jag att padding & border ska räknas i storleken jag bestämmer. 
 Alltså inte läggas extra. */
 * {
@@ -188,13 +191,13 @@ a[aria-current="page"] {
 
     /*När man tar musen över navigeringen och mina knappar så kommer det gula lite långsammare & även textfärgen*/
     a,
-    button {
+    button, #authButton {
         transition: background-color 0.3s, color 0.3s;
     }
 
     /* ville att textfärgen skulle ändras så att det blev bättre för ögat. Tyckte att när man hade det gula och sen den beiga texten så blev det tufft*/
     a:hover,
-    button:hover:not(:disabled) {
+    button:hover:not(:disabled), #authButton:hover {
         background-color: #f0af30;
         color: black;
     }

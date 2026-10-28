@@ -1,3 +1,5 @@
+/* Jag (Linn) har lagt till några smågrejer för att styla nya knappar mm. även ändrat några mått här och var för att matcha sidorna lite mer.*/
+
 /* --- Globala inställningar & Reset --- */
 * {
     box-sizing: border-box;
@@ -82,13 +84,23 @@ a {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+#authButton{
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 a:hover,
-a:active {
+a:active, #authButton:hover{
     background-color: #f0af30;
     color: black;
 }
 
 /* --- Huvudinnehåll --- */
+
+#notLoggedIn{
+    display: none;
+    font-size: larger;
+    text-align: center;
+}
 main {
     padding: 1.5rem;
     flex-grow: 1;
@@ -297,7 +309,7 @@ a[aria-current="page"] {
 
 
     nav{
-        /*padding: 1rem;*/
+
         margin-left: 0.3rem;
         margin-top: 0.3rem;
     }

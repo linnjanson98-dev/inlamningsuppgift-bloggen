@@ -13,7 +13,7 @@ async function fetchData() {
     /*Hämta svampar.json, try catch för att kolla så att allting fungerar som det ska när datan hämtas annars vissas ett errormeddelande
         if(!response.ok) fångar det som fetch inte gör, t.ex. 404 not found, och skickar ett errormeddelande.
     */
-   const jsonError = document.getElementById("jsonError");
+    const jsonError = document.getElementById("jsonError");
     try {
         const response = await fetch("../svampar.json");
         if (!response.ok) {
@@ -40,7 +40,7 @@ function createArticle(data) {
         let swedishName = createElement("h3", svamp.svenskt_namn);
         article.appendChild(swedishName);
 
-        let latinName = createElement("h3", svamp.latinskt_namn);
+        let latinName = createElement("h4", svamp.latinskt_namn);
         article.appendChild(latinName);
 
         let imageMushroom = document.createElement("img");
@@ -63,7 +63,9 @@ function createArticle(data) {
         locationMushroom.textContent = "Fyndplats: " + locationMushroom.textContent;
         article.appendChild(locationMushroom);
 
+
         saveArticleButton(svamp, article);
+
         sectionRef.appendChild(article);
     });
 }
@@ -94,21 +96,22 @@ function saveArticleButton(svamp, article) {
     saveButton.addEventListener("click", () => {
 
         if (!checkIfSaved(svamp)) {
-            if (checkIfLoggedIn()) {
-                let savedMushrooms = JSON.parse(localStorage.getItem("savedMushrooms")) || [];
-                savedMushrooms.push(svamp.latinskt_namn);
-                localStorage.setItem("savedMushrooms", JSON.stringify(savedMushrooms));
-                saveButton.textContent = "Sparad";
-            }
-            else {
-                let alertMsg = "spara svampar."
-                notLoggedIn(alertMsg);
-                //Vill ha någon liten pop-up som säger att man måste logga in för att spara svamp
-            }
+            let savedMushrooms = JSON.parse(localStorage.getItem("savedMushrooms")) || [];
+            savedMushrooms.push(svamp.latinskt_namn);
+            localStorage.setItem("savedMushrooms", JSON.stringify(savedMushrooms));
+            saveButton.textContent = "Sparad";
+
+            let alertMsg = "spara svampar."
+            notLoggedInAlert(alertMsg);
+            //Vill ha någon liten pop-up som säger att man måste logga in för att spara svamp
         }
 
 
     });
+
+    if (!checkIfLoggedIn()) {
+        saveButton.style.display = "none";
+    }
 }
 
 //Kollar ifall en svamp är sparad eller inte, använda samma kod på två ställen så skapade en funktion istället. 

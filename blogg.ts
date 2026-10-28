@@ -1,19 +1,24 @@
+
+//Alla viktiga variabler som kommer behövas vara tillgängliga i koden.
 const namn: string = "Kalle";
 const authButton = document.getElementById("authButton");
 const writePostBtn = document.getElementById("writePostBtn");
 const loginMessage = document.getElementById("loginMessage");
 const presentBlogPosts = document.getElementById("presentBlogPosts");
 
-
+/* Det blev kaos i min init och jag valde att dela in den i mindre funktioner för att strukturera koden bättre
+Det funkade dett viss del, men jag tycker att jag ändå lyckades röra till det längre ner i koden */
 function init(): void {
-    //localStorage.removeItem("blogPosts");
-    //Kolla om man är inloggad och kan skapa inlägg eller kommentera på inlägg
     initLogin();
     initWritePost();
     initPresentPosts();
 
     //Ladda in alla existerande blogginlägg
 }
+
+/*En funktion för att se om man är inloggad som används på olika ställen i koden, t.ex. updateButton nedanför.
+Jag skapade samma funktioner först i Javascript för de andra sidorna men stötte på problemet med att koppla ihop TS och JS 
+Det blev ett för stort projekt för mig att ta itu med så jag valde att bara återskapa dom i TS*/
 
 function checkBlogLogin(): boolean {
     return localStorage.getItem("username") === namn;
@@ -29,12 +34,13 @@ function updateButton(): void {
     }
 }
 
+/* Här körs allt som har med inloggningsknappen och inloggning att göra */
 function initLogin(): void {
     updateButton();
     if (!writePostBtn || !loginMessage) return;
 
     if (checkBlogLogin()) {
-        writePostBtn.style.display = "inline-block";
+        writePostBtn.style.display = "block";
         loginMessage.style.display = "none";
     }
     else {
@@ -56,6 +62,11 @@ function initLogin(): void {
     }
 }
 
+/* Här körs allting som har med att skapa inlägg att göra.
+
+Jag hämtar min form från blogg.html och testar så att den har något innehåll, testar även min writePostBtn. 
+Gör ett click event som döljer nappen efter man klickar p den och istället visar formuläret man skapar inlägget i. 
+Gör den till flex för att funka med min CSS styling*/
 function initWritePost(): void {
     let formRef = document.querySelector("form");
     if (!writePostBtn || !formRef) return;
@@ -65,6 +76,12 @@ function initWritePost(): void {
         formRef.style.display = "flex";
     })
 
+    /* Nytt event på submit som hämtar infon från formRef och sparar i variabler. Behöver specificera vilken sorts HTML Elements för att TS ska hitta 
+    rätt element och dess value. Kollar så att det finns något innehåll, varnar att det saknas om det inte gör det, och om allt är rätt så används
+    klassen BlogPost och dess constructor för att skapa ett nytt objekt, alltså inlägget. Om det finns en array i localstorage så hämtas den annars skapas en tom
+    som newPost sparas i och sen sparas den i localstorgae igen med hjälp av stringify. formReset för att tömma formuläret och reload för att dölja det igen
+    tills man klickar på Skapa Inlägg igen. 
+    */
     formRef.addEventListener("submit", (event) => {
         event.preventDefault();
         const title = formRef.querySelector<HTMLInputElement>("#title");
@@ -72,14 +89,13 @@ function initWritePost(): void {
         const content = formRef.querySelector<HTMLTextAreaElement>("#content");
         //kollar så att det finns title och content och att de har något innehåll. Valde prepend och inte appendChild för jag ville texten skulle hamna längst upp.
         if (!title?.value || !content?.value) {
-            const postError = document.createElement("p")
-            postError.textContent = "Saknas titel och/eller text.";
-            formRef.prepend(postError);
+            let missingInput = document.getElementById("missingInput");
+            if(missingInput){
+                missingInput.style.display = "block";
+            }
         }
         else if (!username) {
-            const postError = document.createElement("p");
-            postError.textContent = "Gick inte hämta användare. Försök ladda om sidan.";
-            formRef.prepend(postError);
+            return;
         }
         else {
             const newPost = new BlogPost(title.value, username, content.value);
@@ -88,15 +104,15 @@ function initWritePost(): void {
             localStorage.setItem("blogPosts", JSON.stringify(blogPostArray));
             formRef.reset();
             window.location.reload();
-
         }
 
     })
 
 }
 
+/* Här hanteras allting som har med att visa inlägg att göra! */
+
 function initPresentPosts() {
-    //Foreach posts i blogPosts skriv ut massa skit.
     let blogPostArray: BlogPost[] = JSON.parse(localStorage.getItem("blogPosts") || "[]");
     let reverseBlogPostArray = [...blogPostArray].reverse();
     //... spread operator som gör en kopia av min array och sen vänder jag på den för att få nyast först
@@ -123,6 +139,7 @@ function initPresentPosts() {
 
         article.appendChild(postContainer);
 
+        //Kollar så man är inloggad och visar formuläret för kommentarer om man är det, annars så blir man ombedd at logga in. 
         if (checkBlogLogin()) {
             article.appendChild(createCommentForm(post, blogPostArray));
         }
@@ -131,6 +148,7 @@ function initPresentPosts() {
             article.appendChild(cantComment);
         }
 
+        //Funktionen som presenterar kommentarerna
         presentComments(post, article);
 
         presentBlogPosts?.appendChild(article);
@@ -180,7 +198,7 @@ function createCommentForm(post: BlogPost, blogPostArray: BlogPost[]): HTMLEleme
 
     return commentForm;
 }
-
+/* Här skapas alla delar av kommentarsfältet (förutom formuläret)  */
 function presentComments(post: BlogPost, article: HTMLElement): void {
 
     const commentSectionTitle = createElement("h4", "Kommentarer: ");
@@ -190,6 +208,9 @@ function presentComments(post: BlogPost, article: HTMLElement): void {
     Så jag kan bestämma hur mycket som visas i min CSS*/
     const commentContainer = document.createElement("div");
     commentContainer.classList.add("commentContainer");  
+    //lägger till commentContainer redan här så noComments kan skrivas ut! Hade det i slutet förut och om inga kommentarer fanns
+    //så gjorde return att funktionen avslutades innan commentContainer lades till på artikeln. 
+    article.appendChild(commentContainer); 
 
     if (!post.comments || post.comments.length === 0){
         let noComments = createElement("p", "Inga kommentarer ännu...");
@@ -197,6 +218,7 @@ function presentComments(post: BlogPost, article: HTMLElement): void {
         return;
     }
 
+    //Går igenom alla element i kommentaren och lägger till dem.
     post.comments.forEach(comment => {
         let commentBody = document.createElement("article");
         commentBody.classList.add("commentBody");
@@ -210,11 +232,14 @@ function presentComments(post: BlogPost, article: HTMLElement): void {
         let commentContent = createElement("p", comment.content)
         commentBody.appendChild(commentContent);
 
-        commentContainer.appendChild(commentBody);
+        commentContainer.prepend(commentBody);
     });
-    article.appendChild(commentContainer);
 }
 
+
+/* Min klass jag skapade för att hantera inläggen.
+Använder min andra class Comments för att skapa en array av kommentarer inne i BlogPosts. På det viset hänger kommentarerna ihop med inlägget
+och gör det enkelt att sedan få tag på dom i local storage. */
 class BlogPost {
     title: string;
     date: string;
@@ -248,19 +273,7 @@ class Comments {
     }
 }
 
-/*const username = localStorage.getItem("username");
 
-if (username) {
-    const post = new BlogPost(
-        "Mitt första inlägg",
-        username,
-        "Det här är innehållet."
-    );
-    const comment = new Comments(username, "Bra inlägg!");
-    post.addComment(comment);
-
-    console.log(post);
-}*/
-
+//Och till sist min lilla init!
 
 init();
