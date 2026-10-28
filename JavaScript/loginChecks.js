@@ -37,7 +37,4 @@ if (authButton) {
     })
 }
 
-function notLoggedIn(alertMsg) {
-    window.alert(`Du måste logga in för att ${alertMsg}`);
-}
 

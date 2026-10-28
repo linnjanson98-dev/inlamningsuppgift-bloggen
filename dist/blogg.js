@@ -4,14 +4,17 @@ const authButton = document.getElementById("authButton");
 const writePostBtn = document.getElementById("writePostBtn");
 const loginMessage = document.getElementById("loginMessage");
 const presentBlogPosts = document.getElementById("presentBlogPosts");
+/* Det blev kaos i min init och jag valde att dela in den i mindre funktioner för att strukturera koden bättre
+Det funkade dett viss del, men jag tycker att jag ändå lyckades röra till det längre ner i koden */
 function init() {
-    //localStorage.removeItem("blogPosts");
-    //Kolla om man är inloggad och kan skapa inlägg eller kommentera på inlägg
     initLogin();
     initWritePost();
     initPresentPosts();
     //Ladda in alla existerande blogginlägg
 }
+/*En funktion för att se om man är inloggad som används på olika ställen i koden, t.ex. updateButton nedanför.
+Jag skapade samma funktioner först i Javascript för de andra sidorna men stötte på problemet med att koppla ihop TS och JS
+Det blev ett för stort projekt för mig att ta itu med så jag valde att bara återskapa dom i TS*/
 function checkBlogLogin() {
     return localStorage.getItem("username") === namn;
 }
@@ -25,12 +28,13 @@ function updateButton() {
         authButton.textContent = "Logga in";
     }
 }
+/* Här körs allt som har med inloggningsknappen och inloggning att göra */
 function initLogin() {
     updateButton();
     if (!writePostBtn || !loginMessage)
         return;
     if (checkBlogLogin()) {
-        writePostBtn.style.display = "inline-block";
+        writePostBtn.style.display = "block";
         loginMessage.style.display = "none";
     }
     else {
@@ -50,6 +54,11 @@ function initLogin() {
         });
     }
 }
+/* Här körs allting som har med att skapa inlägg att göra.
+
+Jag hämtar min form från blogg.html och testar så att den har något innehåll, testar även min writePostBtn.
+Gör ett click event som döljer nappen efter man klickar p den och istället visar formuläret man skapar inlägget i.
+Gör den till flex för att funka med min CSS styling*/
 function initWritePost() {
     let formRef = document.querySelector("form");
     if (!writePostBtn || !formRef)
@@ -58,6 +67,12 @@ function initWritePost() {
         writePostBtn.style.display = "none";
         formRef.style.display = "flex";
     });
+    /* Nytt event på submit som hämtar infon från formRef och sparar i variabler. Behöver specificera vilken sorts HTML Elements för att TS ska hitta
+    rätt element och dess value. Kollar så att det finns något innehåll, varnar att det saknas om det inte gör det, och om allt är rätt så används
+    klassen BlogPost och dess constructor för att skapa ett nytt objekt, alltså inlägget. Om det finns en array i localstorage så hämtas den annars skapas en tom
+    som newPost sparas i och sen sparas den i localstorgae igen med hjälp av stringify. formReset för att tömma formuläret och reload för att dölja det igen
+    tills man klickar på Skapa Inlägg igen.
+    */
     formRef.addEventListener("submit", (event) => {
         event.preventDefault();
         const title = formRef.querySelector("#title");
@@ -65,14 +80,13 @@ function initWritePost() {
         const content = formRef.querySelector("#content");
         //kollar så att det finns title och content och att de har något innehåll. Valde prepend och inte appendChild för jag ville texten skulle hamna längst upp.
         if (!title?.value || !content?.value) {
-            const postError = document.createElement("p");
-            postError.textContent = "Saknas titel och/eller text.";
-            formRef.prepend(postError);
+            let missingInput = document.getElementById("missingInput");
+            if (missingInput) {
+                missingInput.style.display = "block";
+            }
         }
         else if (!username) {
-            const postError = document.createElement("p");
-            postError.textContent = "Gick inte hämta användare. Försök ladda om sidan.";
-            formRef.prepend(postError);
+            return;
         }
         else {
             const newPost = new BlogPost(title.value, username, content.value);
@@ -84,8 +98,10 @@ function initWritePost() {
         }
     });
 }
+/* Här hanteras allting som har med att visa inlägg att göra!
+Jag ville att inläggen skulle hamna med nyast längst upp så med
+*/
 function initPresentPosts() {
-    //Foreach posts i blogPosts skriv ut massa skit.
     let blogPostArray = JSON.parse(localStorage.getItem("blogPosts") || "[]");
     let reverseBlogPostArray = [...blogPostArray].reverse();
     //... spread operator som gör en kopia av min array och sen vänder jag på den för att få nyast först
@@ -153,6 +169,9 @@ function presentComments(post, article) {
     Så jag kan bestämma hur mycket som visas i min CSS*/
     const commentContainer = document.createElement("div");
     commentContainer.classList.add("commentContainer");
+    //lägger till commentContainer redan här så noComments kan skrivas ut! Hade det i slutet förut och om inga kommentarer fanns
+    //så gjorde return att funktionen avslutades innan commentContainer lades till på artikeln. 
+    article.appendChild(commentContainer);
     if (!post.comments || post.comments.length === 0) {
         let noComments = createElement("p", "Inga kommentarer ännu...");
         commentContainer.appendChild(noComments);
@@ -167,9 +186,8 @@ function presentComments(post, article) {
         commentBody.appendChild(commentDate);
         let commentContent = createElement("p", comment.content);
         commentBody.appendChild(commentContent);
-        commentContainer.appendChild(commentBody);
+        commentContainer.prepend(commentBody);
     });
-    article.appendChild(commentContainer);
 }
 class BlogPost {
     title;
@@ -198,17 +216,4 @@ class Comments {
         this.content = content;
     }
 }
-/*const username = localStorage.getItem("username");
-
-if (username) {
-    const post = new BlogPost(
-        "Mitt första inlägg",
-        username,
-        "Det här är innehållet."
-    );
-    const comment = new Comments(username, "Bra inlägg!");
-    post.addComment(comment);
-
-    console.log(post);
-}*/
 init();

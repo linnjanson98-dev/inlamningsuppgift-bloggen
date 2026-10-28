@@ -1,74 +1,25 @@
+/* En del är återanvänt från tidigare CSS, mest från index*/
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 
 }
-
+/* Döljer det som ska döljas när sidan först laddas in. Detta visas med hjälp av TS*/
 #notLoggedIn,
 #writePostBtn,
-form {
+form, #missingInput {
     display: none;
 }
 
 body {
     background-color: #d9d2b8;
 }
-
-#commentForm{
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: 1fr 3fr;
-    gap: 10px;
-    align-items: center;
-    margin-top: 1rem;
-    padding: 1rem;
-    border: 1px solid black;
+/* Ser till att om användaren klickat enter i sin input så visas det i inläggen! */
+p{
+    white-space: pre-wrap;
 }
-
-#commentForm h4{
-    grid-column: 1/3;
-    grid-row: 1;
-    text-align: left;
-}
-
-#commentForm textarea{
-    grid-column: 1;
-    grid-row: 2;
-    min-height: 90px;
-    min-width: 150px;
-}
-
-#commentForm input[type="submit"]{
-    grid-column: 2;
-    grid-row: 2;
-    padding: 5px;
-    display: block;
-    align-self: bottom;
-    margin: auto 0 5px 15px;
-}
-
-.commentContainer{
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-    max-height: 250px;
-    overflow-y: auto;
-    padding: 10px;
-    border-width: 10px 2px 5px 2px;
-    border-color: #332e18;
-    border-style: solid;
-    background-color: #d9d2b8;
-}
-
-.commentBody{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-
 h1,
 h2 {
     text-align: center;
@@ -78,8 +29,30 @@ h2 {
     text-shadow: 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000, 1px 1px 0 #000;
 }
 
-h3{
+h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+}
+
+h3 {
     font-size: 1.5rem;
+    text-decoration: underline;
+}
+
+h3,
+h4,
+h5,
+p {
+    color: #332e18;
+}
+
+h5 {
+    font-style: italic;
+}
+/* Ville komma åt specfikt h5:an i kommentarerna för att göra ett litet streck */
+.commentContainer h5 {
+    padding-bottom: 0.3rem;
+    border-bottom: 1px dotted #332e18;
 }
 
 nav {
@@ -105,52 +78,96 @@ a {
     background-color: #5a6618;
 }
 
+section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Fin border på meddelandet om man inte är inloggad */
+#loginMessage{
+    border: 1px dashed #332e18;
+    padding: 2px;
+    font-style: italic;
+}
 
 form {
     flex-direction: column;
-    text-align: center;
+    gap: 0.5rem;
+    text-align: left;
+    border: 1px solid #332e18;
+    margin: 1rem 1rem 0;
+    padding: 1rem;
+    background-color: rgb(187, 197, 132);
+    border-radius: 0.3rem;
+}
+
+/* Lägger varningen om saknad input under submit */
+#missingInput {
+    color: #d32f2f;
+    text-align: right;
+    margin-right: 0;
+}
+
+/* Ser till att det är samma font i all input*/
+#title, #content {
+    font-family: inherit;
 }
 
 #title {
-    margin: 1rem auto;
+    background-color: #d9d2b8;
+    margin-bottom: 0.5rem;
+    border-radius: 0.3rem;
+    padding: 5px;
 }
 
+label {
+    font-weight: bold;
+    color: #332e18;
+}
+
+/* Anpassar storleken på textarea för texten i inlägget*/
 #content {
     align-self: center;
-    width: 20rem;
+    width: 100%;
     height: 10rem;
     max-height: 20rem;
-    resize: none;
+    border-radius: 0.3rem;
+    padding: 5px;
 }
 
 input[type="submit"] {
     width: fit-content;
-    margin: 1rem 2rem 1rem auto;
+    margin: 1rem 0 1rem auto;
 }
 
-p {
-    text-align: center;
-    margin: 0 1rem;
-    min-width: 0;
-    color: #332e18;
+/*Så att all textarea for samma färg och ingen resize, istället för att skriva på två ställen!*/
+textarea {
+    background-color: #d9d2b8;
+    resize: none;
 }
 
-article p:last-of-type {
-    margin-top: 1rem;
+/* Matchande styling för olika knappar*/
+button,
+input[type="submit"] {
+    color: #d9d2b8;
+    display: block;
+    background-color: #5a6618;
+    border: 1px solid #332e18;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+
 }
 
 button {
-    display: block;
     margin: 1rem 0.8rem 0.8rem auto;
-    padding: 0.5rem 1rem;
-    color: #d9d2b8;
-    background-color: #5a6618;
-    border-radius: 0.5rem;
-    font-weight: bold;
 }
 
 #writePostBtn {
-    margin: 0 2rem;
+    margin: 0 1rem 0 auto;
     padding: 0.5rem 1rem;
     color: #d9d2b8;
     background-color: #5a6618;
@@ -158,37 +175,132 @@ button {
     font-weight: bold;
 }
 
-#presentBlogPosts{
-    margin: 2rem;
+/* presentBlogPosts hanterar alla inlägg, lägger dom i en flex column.*/
+#presentBlogPosts {
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
 }
 
-article{
+/* articles innehåller inlägg och kommentarsfält, stylar med flex och borders*/
+article {
     display: flex;
     gap: 10px;
     flex-direction: column;
     width: 100%;
-    border: 2px solid black;
-    padding: 2rem;
+    border: 1px solid #332e18;
+    padding: 1rem;
     background-color: rgb(187, 197, 132);
     border-radius: 0.3rem;
 }
 
-.postContainer{
+/* Gör containers inne i alla articles som hanterar innehållet för varje inlägg, också en flex column */
+.postContainer {
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
-.postContainer p{
+/* Ändrar specifikt p inne i inläggen så de ser ut som jag vill */
+.postContainer p {
     align-self: center;
     text-align: left;
     padding: 10px;
     width: 100%;
     min-height: 150px;
     border: 1px solid #332e18;
+    border-radius: 0.3rem;
+    background-color: #d9d2b8;
+}
+
+/* En ::after för att lägga en liten border under inlägget och innan kommentarerna
+ (Jag la till detta efter jag använde ::after i kommentarsfältet så jag har mer kommentarer om det längre ner)*/
+.postContainer::after {
+    content: "";
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px dotted #332e18;
+}
+
+
+/* Får formuläret för att skapa kommentarer att se ut som jag vill*/
+#commentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #332e18;
+    border-radius: 0.3rem;
+}
+
+/* massa mer småpill med olika delar*/
+#commentForm h4 {
+    text-align: left;
+}
+
+#commentForm textarea {
+    min-height: 50px;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+}
+
+#commentForm input[type="submit"] {
+    margin: auto 7px 0 auto;
+}
+
+/*Scrollbar för att inte alla inlägg ska bli för långa när man kommenterar
+Lite mer design på bordern för jag tyckte det var fint. */
+.commentContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    position: relative;
+    padding: 10px 10px 0 10px;
+    border-width: 5px 1px 3px 1px;
+    border-color: #332e18;
+    border-style: solid;
+    background-color: #d9d2b8;
+}
+
+.commentContainer p {
+    padding: 10px;
+}
+
+/* På mobilen så försvann scrollbaren när man inte scrollar och om en kommentar tog upp hela rutan så var det svårt att se att det gick att scrolla
+så jag satte en liten färg gradient längst ner för att visa att det går scrolla! Jag ville egentligen fixa så att den bara syns när det faktiskt
+går att scrolla men tiden fanns inte. 
+Content behövs för att visa pesudo-element. position sticky gör att den fastnar när den når en viss position, vilket i detta fall är bottom
+sätter en height så den inte täcker allt, negativ margin flyttar upp elementet lite och att de verkligen lägger sig över det sista området, 
+märks mest på rutan för inga kommentarer som annars blir mycket större utan negativ margin-top.  Flex shrink 0 så den inte krymper utan alltid 
+håller sig vid 30px.*/
+.commentContainer::after {
+    content: "";
+    position: sticky;
+    bottom: 0;
+    height: 30px;
+    margin-top: -30px;
+    flex-shrink: 0;
+    background: linear-gradient(to bottom, rgba(217, 210, 184, 0),
+            #d9d2b8);
+}
+
+.commentBody {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 10px;
+}
+
+.commentBody p {
+    padding: 0;
 }
 
 /*Lägger footer där den ska och fixar färger*/
@@ -201,19 +313,56 @@ footer {
     margin-top: 1rem;
 }
 
+a[aria-current="page"] {
+    background-color: #f0af30;
+    color: black;
+}
+
 @media (min-width: 768px) {
 
+    /*Valde att göra bloggsidan lite smalare än de andra sidorna, allt annat matchar fortfarande så jag tycker det funkar */
+    main {
+        width: 100%;
+        margin: 0 auto;
+        max-width: 800px;
+    }
+    /* Massa massa småpill för att ändra lite layout på sidan */
     h1 {
+        padding-top: 1.1rem;
         padding-left: 1rem;
         font-size: 3rem;
         text-align: left;
     }
 
+    h2 {
+        font-size: 2.5rem;
+        margin-left: 1rem;
+        text-align: left;
+        padding-top: 2rem;
+        padding-bottom: 0;
+    }
+
+    h3 {
+        font-size: 2rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+
+    h5 {
+        font-size: 1.2rem;
+    }
+
     nav {
         margin-left: 5rem;
         margin-right: 5rem;
-        padding: 1rem;
+        padding: 0 1rem 1rem 1rem;
         margin-bottom: 0;
+    }
+
+    .commentContainer::after {
+        display: none;
     }
 
     /*Gör nav till flex för at kunna lägga länkarna på rad*/
@@ -225,21 +374,42 @@ footer {
         list-style-type: none;
     }
 
+    /* Flex shrink gör så länkarna inte radbryter*/
+    nav li{
+        flex-shrink: 0;
+    }
+
     /*Ändrar font size för att passa en större skärm*/
     a {
         font-size: 1.5rem;
     }
 
+    form {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* flex så att rubriken och knappen är på samma rad.*/
     section {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         margin: 1rem auto;
-        gap: 30rem;
+    }
+
+    #loginMessage{
+        text-align: left;
+    }
+
+    /* centrerar inläggen*/
+    #presentBlogPosts {
+        margin: 2rem auto;
+        gap: 2rem;
     }
 
 
     p {
+        font-size: larger;
         margin: 0 1.5rem;
     }
 
@@ -251,19 +421,32 @@ footer {
         margin-bottom: 1rem;
     }
 
-    /*Ser till att knappen är längst ner*/
     button {
-        margin-top: auto;
+        padding: 0.5 1rem;
+        font-size: 1.2rem;
     }
 
-    /*Ändrar färg på bakgrund på länkar och button med :hover och gör en mjukare transition med ease*/
+    #authButton {
+        margin: 1rem 0.8rem 0.8rem auto;
+    }
+
+    #writePostBtn {
+        margin: auto;
+        margin-right: 1rem;
+    }
+
+    /*Ändrar färg på bakgrund på länkar och button med :hover och gör en mjukare transition med ease
+    av någon anledning så fick inte writePostBtn vara med i button så la till den extra här och i :hover*/
     a,
-    button {
+    button,
+    input[type="submit"], #writePostBtn {
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     a:hover,
-    button:hover {
+    button:hover,
+    input[type="submit"]:hover,
+    #writePostBtn:hover {
         background-color: #f0af30;
         color: black;
     }

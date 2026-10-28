@@ -1,3 +1,5 @@
+//!!!!!Tillägg rad 211-214 av Linn !!!!!! 
+
 // ==========================================
 // Mina svampar: visar de svampar besökaren har sparat
 // ==========================================
@@ -9,8 +11,8 @@ const cardContainer = document.getElementById("card-container");
 const emptyState = document.getElementById("empty-state");
 const clearButton = document.getElementById("clear-button");
 const errorMessage = document.getElementById("error-message");
+const notLoggedIn = document.getElementById("notLoggedIn");
 
-// Nyckeln som de sparade svamparna ligger under i localStorage (bestämd tillsammans med Linn)
 const STORAGE_KEY = "savedMushrooms";
 
 // Alla svampar från svampar.json. Filen hämtas bara en gång och sparas här.
@@ -203,10 +205,14 @@ clearButton.addEventListener("click", () => {
 // ------------------------------------------
 // 6. Starta
 // ------------------------------------------
+
+//Tillägg av Linn för att meddela att man måste vara inloggad för att se sparade svampar. Använder funktion från loginChecks.js
 async function init() {
+    console.log("Inloggad:", checkIfLoggedIn());
+    console.log("Elementet:", notLoggedIn);
     if (!checkIfLoggedIn()) {
-        let alertMsg = "se sparade svampar."
-        notLoggedIn(alertMsg)
+        console.log(notLoggedIn);
+        notLoggedIn.style.display = "block";
     }
     else {
         updateButton();
